@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function ProductCard({ data }) {
   const navigate = useNavigate();
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
-      style={styles.card}
+      style={{
+        ...styles.card,
+        ...(isHovered ? styles.cardHover : {}),
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onClick={() => navigate(`/products/${data.id}`)}
       className="fade-in"
     >
@@ -27,11 +33,16 @@ const styles = {
     border: '1px solid #ddd',
     borderRadius: '10px',
     padding: '1rem',
-    width: '220px',
+    width: '250px',
     background: '#fff',
     boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
     cursor: 'pointer',
-    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    animation: 'fadeIn 0.5s ease-in-out',
+  },
+  cardHover: {
+    transform: 'translateY(-5px)',
+    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
   },
   image: {
     width: '100%',
@@ -44,13 +55,16 @@ const styles = {
     marginBottom: '0.5rem',
     minHeight: '50px',
     overflow: 'hidden',
+    fontWeight: '500',
+    color: '#333',
   },
   price: {
     fontWeight: 'bold',
-    color: '#333',
+    color: '#a0041e',
+    marginBottom: '0.25rem',
   },
   category: {
-    fontSize: '0.8rem',
+    fontSize: '0.85rem',
     color: '#777',
   },
 };
